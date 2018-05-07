@@ -28,6 +28,27 @@ int main() {
     m4.for_each_item_in_row(9, [](int& item){item =1;});
     m4.for_each_item_in_column(0, [](int& item){item = 1;});
     m4.for_each_item_in_column(9, [](int& item){item = 1;});
-    cout <<'\n' << m4;
+    cout << '\n' << m4 << endl;
+
+    m4*=3;
+    cout << m4 << endl;
+
+    m4 = m4+m4;
+    cout << m4 << endl;
+
+    Matrix m5(10,10);
+    m5 = m2 * m3;
+    cout << m5 << endl;
+    m5*= m2;
+    cout << m2 << endl;
+    cout << m5 << endl;
+
+    Matrix mi6(3,3);
+    //1 4 1
+    //0 6 4
+    //0 0 1
+    cin >> mi6;
+    cout << "upper? " << mi6.is_upper_triangle();
+
     return 0;
 }

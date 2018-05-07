@@ -34,7 +34,7 @@ std::pair<unsigned int, unsigned int> Matrix::dimension() {
     return std::make_pair(row, column);
 }
 
-std::vector<int> Matrix::first_diagonal() {
+std::vector<int> Matrix::main_diagonal() {
     if(row != column)
         throw std::runtime_error("Must be a Square Matrix to get the diagonal.");
     std::vector<int> diagonal;
@@ -108,18 +108,18 @@ bool Matrix::is_anti_symmetry(){
     opposite.for_each_item([](int& item){item *= -1;});
     return transposed == opposite;
 }
-bool Matrix::is_top_triangle() {
-    for(unsigned int i = 0; i < row; ++i) {
-        for(unsigned int j = 0; j < column - i - 1; ++j) {
-            if(matrix[i][j]  != 0)
+bool Matrix::is_upper_triangle() {
+    for(unsigned int i = 1; i < row; ++i) {
+        for(unsigned int j = 0; j < i; ++j) {
+            if(matrix[i][j] != 0)
                 return false;
         }
     }
     return true;
 }
-bool Matrix::is_bottom_triangle(){
+bool Matrix::is_lower_triangle(){
      for(unsigned int i = 0; i < row; ++i) {
-        for(unsigned int j = 0; j < column - i - 1; ++j) {
+        for(unsigned int j = i + j ; j < column; ++j) {
             if(matrix[i][j]  != 0)
                 return false;
         }
@@ -127,7 +127,7 @@ bool Matrix::is_bottom_triangle(){
     return true;
 }
 bool Matrix::is_identity() {
-    std::vector<int> diagonal = first_diagonal();
+    std::vector<int> diagonal = main_diagonal();
     return std::equal(diagonal.begin()+1,diagonal.end(),diagonal.begin());
 }
 
@@ -226,14 +226,36 @@ Matrix Matrix::operator * (const Matrix& m) {
     if(column != m.row)
         throw std::runtime_error("product(*) of matrices failed due to their different sizes");
     Matrix result(row,m.column);
-    // still incomplete...
+    for(unsigned int i = 0; i < row; ++i) {
+        for(unsigned int j = 0; j < m.column; ++j) {
+            for(unsigned int k = 0; k < column; ++k){
+                result(i,j) += matrix[i][k] * m(k,j);
+            }
+        }
+    }
     return result;
 }
 
 void Matrix::operator *= (const Matrix& m) {
     if(column != m.row)
         throw std::runtime_error("product(*) of matrices failed due to their different sizes");
-    //in construction...
+    Matrix result(row,m.column);
+    for(unsigned int i = 0; i < row; ++i) {
+        for(unsigned int j = 0; j < m.column; ++j) {
+            for(unsigned int k = 0; k < column; ++k){
+                result(i,j) += matrix[i][k] * m(k,j);
+            }
+        }
+    }
+    (*this) = result;
+}
+Matrix Matrix::operator * (unsigned int k) {
+    for_each_item([&k](int& item){item *= k;});
+    return *this;
+}
+
+void Matrix::operator *= (unsigned int k) {
+    for_each_item([&k](int& item){item *= k;});
 }
 bool Matrix::operator == (const Matrix& m) {
     if(row != m.row || column != m.column)

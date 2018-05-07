@@ -17,7 +17,7 @@ public:
     void print() const;
 
     std::pair<unsigned int, unsigned int> dimension();
-    std::vector<int> first_diagonal();
+    std::vector<int> main_diagonal();
     unsigned int rows()const;
     unsigned int columns()const;
 
@@ -27,8 +27,8 @@ public:
     bool is_symmetry();
     bool is_anti_symmetry();
     bool is_identity();
-    bool is_top_triangle();
-    bool is_bottom_triangle();
+    bool is_upper_triangle();
+    bool is_lower_triangle();
 
     // Operation in which one of the matrix members;
     void for_each_item(std::function<void(int& item)> lambda);
@@ -45,6 +45,8 @@ public:
     bool operator == (const Matrix& m);
     Matrix operator * (const Matrix& m);
     void operator *= (const Matrix& m);
+    Matrix operator * (unsigned int k);
+    void operator *= (unsigned int k);
     int& operator () (unsigned int x, unsigned int y);
     const int& operator()(unsigned int x, unsigned int y) const;
     friend std::ostream & operator << (std::ostream& out, const Matrix& object) {
