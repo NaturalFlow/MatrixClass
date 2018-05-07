@@ -22,6 +22,14 @@ Matrix::Matrix(const Matrix& m) {
     }
 }
 
+void Matrix::print() const {
+    for(unsigned int i = 0; i < row; ++i) {
+        for(unsigned int j = 0; j < column; ++j) {
+            std::cout << matrix[i][j] << ((j == column -1) ? '\n' : ' ') ;
+        }
+    }
+}
+
 std::pair<unsigned int, unsigned int> Matrix::dimension() {
     return std::make_pair(row, column);
 }
@@ -36,12 +44,24 @@ std::vector<int> Matrix::first_diagonal() {
 
 
 }
-unsigned int Matrix::rows() {
+unsigned int Matrix::rows() const {
     return row;
 }
 
-unsigned int Matrix::columns() {
+unsigned int Matrix::columns() const {
     return column;
+}
+
+bool Matrix::is_equal(const Matrix& m) {
+    if(row != m.row || column != m.column)
+        return false;
+    for(unsigned int i = 0; i < row; ++i) {
+        for(unsigned int j = 0; j < column ; ++j) {
+            if(matrix[i][j] != m(i,j))
+                return false;
+        }
+    }
+    return true;
 }
 
 bool Matrix::rotate_matrix() {
@@ -63,16 +83,21 @@ bool Matrix::rotate_matrix() {
     return true;
 }
 
-bool Matrix::is_equal(const Matrix& m) {
-    if(row != m.row || column != m.column)
-        return false;
+void Matrix::transpose() {
+    Matrix transposed(column,row);
     for(unsigned int i = 0; i < row; ++i) {
-        for(unsigned int j = 0; j < column ; ++j) {
-            if(matrix[i][j] != m(i,j))
-                return false;
+        for(unsigned int j = 0; j < column; ++j) {
+            transposed(j,i) = matrix[i][j];
         }
     }
-    return true;
+    (*this) = transposed;
+}
+bool Matrix::is_symmetry() {
+    if(row != column)
+       return false;
+    Matrix transposed(*this);
+    transposed.transpose();
+    return transposed == (*this);
 }
 
 bool Matrix::is_identity() {
