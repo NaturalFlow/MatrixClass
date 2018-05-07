@@ -99,7 +99,15 @@ bool Matrix::is_symmetry() {
     transposed.transpose();
     return transposed == (*this);
 }
-
+bool Matrix::is_anti_symmetry(){
+    if(row != column)
+       return false;
+    Matrix transposed(*this);
+    transposed.transpose();
+    Matrix opposite(transposed);
+    opposite.for_each_item([](int& item){item *= -1;});
+    return transposed == opposite;
+}
 bool Matrix::is_identity() {
     std::vector<int> diagonal = first_diagonal();
     return std::equal(diagonal.begin()+1,diagonal.end(),diagonal.begin());

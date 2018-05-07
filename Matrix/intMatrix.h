@@ -25,6 +25,7 @@ public:
     bool rotate_matrix();
     void transpose();
     bool is_symmetry();
+    bool is_anti_symmetry();
     bool is_identity();
 
     // Operation in which one of the matrix members;
