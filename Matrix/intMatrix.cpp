@@ -108,6 +108,24 @@ bool Matrix::is_anti_symmetry(){
     opposite.for_each_item([](int& item){item *= -1;});
     return transposed == opposite;
 }
+bool Matrix::is_top_triangle() {
+    for(unsigned int i = 0; i < rows; ++i) {
+        for(unsigned int j = 0; j < column - i - 1; ++j) {
+            if(matrix[i][j  != 0)
+                return false;
+        }
+    }
+    return true;
+}
+bool Matrix::is_bottom_triangle(){
+     for(unsigned int i = 0; i < rows; ++i) {
+        for(unsigned int j = 0; j < column - i - 1; ++j) {
+            if(matrix[i][j  != 0)
+                return false;
+        }
+    }
+    return true;
+}
 bool Matrix::is_identity() {
     std::vector<int> diagonal = first_diagonal();
     return std::equal(diagonal.begin()+1,diagonal.end(),diagonal.begin());
@@ -204,6 +222,19 @@ void Matrix::operator -= (const Matrix& m) {
     }
 }
 
+Matrix Matrix::operator * (const Matrix& m) {
+    if(column != m.row)
+        throw std::runtime_error("product(*) of matrices failed due to their different sizes");
+    Matrix result(row,m.column);
+    // still incomplete...
+    return result;
+}
+
+void Matrix::operator *= (const Matrix& m) {
+    if(column != m.row)
+        throw std::runtime_error("product(*) of matrices failed due to their different sizes");
+    //in construction...
+}
 bool Matrix::operator == (const Matrix& m) {
     if(row != m.row || column != m.column)
         return false;

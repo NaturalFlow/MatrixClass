@@ -27,6 +27,8 @@ public:
     bool is_symmetry();
     bool is_anti_symmetry();
     bool is_identity();
+    bool is_top_triangle();
+    bool is_bottom_triangle();
 
     // Operation in which one of the matrix members;
     void for_each_item(std::function<void(int& item)> lambda);
@@ -41,6 +43,8 @@ public:
     Matrix operator - (const Matrix& m);
     void operator -= (const Matrix& m);
     bool operator == (const Matrix& m);
+    Matrix operator * (const Matrix& m);
+    void operator *= (const Matrix& m);
     int& operator () (unsigned int x, unsigned int y);
     const int& operator()(unsigned int x, unsigned int y) const;
     friend std::ostream & operator << (std::ostream& out, const Matrix& object) {
