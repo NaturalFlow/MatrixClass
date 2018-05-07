@@ -22,5 +22,12 @@ int main() {
     cout << m1;
     cout << '\n' << m2 << endl;
     m3.print();
+
+    Matrix m4(10,10);
+    m4.for_each_item_in_row(0, [](int& item){item =1;});
+    m4.for_each_item_in_row(9, [](int& item){item =1;});
+    m4.for_each_item_in_column(0, [](int& item){item = 1;});
+    m4.for_each_item_in_column(9, [](int& item){item = 1;});
+    cout <<'\n' << m4;
     return 0;
 }

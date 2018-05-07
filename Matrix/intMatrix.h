@@ -32,8 +32,8 @@ public:
 
     // Operation in which one of the matrix members;
     void for_each_item(std::function<void(int& item)> lambda);
-    void for_each_item_in_row(std::function<void(int& item)> lambda, unsigned int current);
-    void for_each_item_in_column(std::function<void(int& item)> lambda, unsigned int current);
+    void for_each_item_in_row(unsigned int current, std::function<void(int& item)> lambda);
+    void for_each_item_in_column(unsigned int current, std::function<void(int& item)> lambda);
 
     //Acess the matrix using () ,so to acess the second item matrix(0,1)
 

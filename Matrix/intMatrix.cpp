@@ -109,18 +109,18 @@ bool Matrix::is_anti_symmetry(){
     return transposed == opposite;
 }
 bool Matrix::is_top_triangle() {
-    for(unsigned int i = 0; i < rows; ++i) {
+    for(unsigned int i = 0; i < row; ++i) {
         for(unsigned int j = 0; j < column - i - 1; ++j) {
-            if(matrix[i][j  != 0)
+            if(matrix[i][j]  != 0)
                 return false;
         }
     }
     return true;
 }
 bool Matrix::is_bottom_triangle(){
-     for(unsigned int i = 0; i < rows; ++i) {
+     for(unsigned int i = 0; i < row; ++i) {
         for(unsigned int j = 0; j < column - i - 1; ++j) {
-            if(matrix[i][j  != 0)
+            if(matrix[i][j]  != 0)
                 return false;
         }
     }
@@ -139,18 +139,18 @@ void Matrix::for_each_item(std::function<void(int& item)> lambda) {
     }
 }
 
-void Matrix::for_each_item_in_row(std::function<void(int& item)> lambda, unsigned int current) {
+void Matrix::for_each_item_in_row(unsigned int current, std::function<void(int& item)> lambda) {
     if(current >= row)
         throw std::runtime_error("This row do not exist.");
     for(unsigned int i = 0; i < column ; ++i)
         lambda(matrix[current][i]);
 }
 
-void Matrix::for_each_item_in_column(std::function<void(int& item)> lambda, unsigned int current) {
+void Matrix::for_each_item_in_column(unsigned int current, std::function<void(int& item)> lambda) {
     if(current >= column)
         throw std::runtime_error("This column do not exist.");
     for(unsigned int i = 0; i < row ; ++i)
-        lambda(matrix[i][column]);
+        lambda(matrix[i][current]);
 }
 
 Matrix& Matrix::operator = (const Matrix& m) {
