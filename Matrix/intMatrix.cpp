@@ -26,6 +26,24 @@ std::pair<unsigned int, unsigned int> Matrix::dimension() {
     return std::make_pair(row, column);
 }
 
+std::vector<int> Matrix::first_diagonal() {
+    if(row != column)
+        throw std::runtime_error("Must be a Square Matrix to get the diagonal.");
+    std::vector<int> diagonal;
+    for(unsigned int i = 0; i < row; ++i) {
+        diagonal.push_back(matrix[i][i]);
+    }
+
+
+}
+unsigned int Matrix::rows() {
+    return row;
+}
+
+unsigned int Matrix::columns() {
+    return column;
+}
+
 bool Matrix::rotate_matrix() {
     if(row != column)
         return false;
@@ -42,6 +60,7 @@ bool Matrix::rotate_matrix() {
 		++currentLevel;
 		--last;
     }
+    return true;
 }
 
 bool Matrix::is_equal(const Matrix& m) {
@@ -56,12 +75,31 @@ bool Matrix::is_equal(const Matrix& m) {
     return true;
 }
 
-int& Matrix::operator()(unsigned int x, unsigned int y) {
-    return matrix[x][y];
+bool Matrix::is_identity() {
+    std::vector<int> diagonal = first_diagonal();
+    return std::equal(diagonal.begin()+1,diagonal.end(),diagonal.begin());
 }
 
-const int& Matrix::operator()(unsigned int x, unsigned int y) const {
-    return matrix[x][y];
+void Matrix::for_each_item(std::function<void(int& item)> lambda) {
+    for(unsigned int i = 0; i < row; ++i) {
+        for(unsigned int j = 0; j < column; ++j) {
+            lambda(matrix[i][j]);
+        }
+    }
+}
+
+void Matrix::for_each_item_in_row(std::function<void(int& item)> lambda, unsigned int current) {
+    if(current >= row)
+        throw std::runtime_error("This row do not exist.");
+    for(unsigned int i = 0; i < column ; ++i)
+        lambda(matrix[current][i]);
+}
+
+void Matrix::for_each_item_in_column(std::function<void(int& item)> lambda, unsigned int current) {
+    if(current >= column)
+        throw std::runtime_error("This column do not exist.");
+    for(unsigned int i = 0; i < row ; ++i)
+        lambda(matrix[i][column]);
 }
 
 Matrix& Matrix::operator = (const Matrix& m) {
@@ -109,6 +147,29 @@ void Matrix::operator += (const Matrix& m) {
         }
     }
 }
+Matrix Matrix::operator - (const Matrix& m) {
+    if(row != m.row || column != m.column)
+        throw std::runtime_error("difference(-) of matrix failed due to their different sizes");
+
+    Matrix result(m.row,m.column);
+    for(unsigned int i = 0; i < row; ++i) {
+        for(unsigned int j = 0; j < column; ++j) {
+            result(i,j) = matrix[i][j] - m(i,j);
+        }
+    }
+    return result;
+}
+
+void Matrix::operator -= (const Matrix& m) {
+    if(row != m.row || column != m.column) {
+        throw std::runtime_error("difference(-) of matrix failed due to their different sizes");
+    }
+    for(unsigned int i = 0; i < row; ++i) {
+        for(unsigned int j = 0; j < column; ++j) {
+            matrix[i][j] -= m(i,j);
+        }
+    }
+}
 
 bool Matrix::operator == (const Matrix& m) {
     if(row != m.row || column != m.column)
@@ -123,20 +184,12 @@ bool Matrix::operator == (const Matrix& m) {
 
 }
 
-void Matrix::for_each_item(std::function<void(int& m)> lambda) {
-    for(unsigned int i = 0; i < row; ++i) {
-        for(unsigned int j = 0; j < column; ++j) {
-            lambda(matrix[i][j]);
-        }
-    }
+int& Matrix::operator()(unsigned int x, unsigned int y) {
+    return matrix[x][y];
 }
 
-void Matrix::for_each_item(std::function<void(int& m)> lambda, unsigned int x, unsigned int y) {
-    for(unsigned int i = 0; i < x; ++i) {
-        for(unsigned int j = 0; j < y; ++j) {
-            lambda(matrix[i][j]);
-        }
-    }
+const int& Matrix::operator()(unsigned int x, unsigned int y) const {
+    return matrix[x][y];
 }
 
 Matrix::~Matrix() {

@@ -16,6 +16,14 @@ int main() {
     Matrix m3(3,3);
     m3.for_each_item([](int& item){item = 0;});
     m3 = m1 + m2;
+    /*m3.for_each_row([](vector<int>columns,unsigned int row){
+                        cout << "Linha " << row << endl;
+                        cout << "--";
+                        for(auto& column: columns) {
+                            cout << column << "  ";
+                        }
+                    })
+    */
     cout << m3(2,1) << endl;
     return 0;
 }
