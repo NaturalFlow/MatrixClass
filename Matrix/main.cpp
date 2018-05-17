@@ -42,7 +42,8 @@ int main() {
     m5*= m2;
     cout << m2 << endl;
     cout << m5 << endl;
-
+    m2 *= 2;
+    cout << m2 << endl;
     Matrix mi6(3,3);
     //1 4 1
     //0 6 4

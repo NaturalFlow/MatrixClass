@@ -257,6 +257,19 @@ Matrix Matrix::operator * (unsigned int k) {
 void Matrix::operator *= (unsigned int k) {
     for_each_item([&k](int& item){item *= k;});
 }
+Matrix Matrix::operator ^ (unsigned int k) {
+    if(row != column)
+        throw std::runtime_error("Not a square to be power.");
+    Matrix result(*this);
+    for(unsigned int i = 0; i < k; ++i)
+        result.for_each_item([](int& n){n*=n;});
+}
+void Matrix::operator ^= (unsigned int k){
+    if(row != column)
+        throw std::runtime_error("Not a square to be power.");
+    for(unsigned int i = 0; i < k; ++i)
+        for_each_item([](int& n){n*=n;});
+}
 bool Matrix::operator == (const Matrix& m) {
     if(row != m.row || column != m.column)
         return false;
@@ -268,6 +281,9 @@ bool Matrix::operator == (const Matrix& m) {
     }
     return true;
 
+}
+bool Matrix::operator != (const Matrix& m) {
+    return !((*this) == m);
 }
 
 int& Matrix::operator()(unsigned int x, unsigned int y) {

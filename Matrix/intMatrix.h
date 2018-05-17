@@ -42,11 +42,14 @@ public:
     void operator += (const Matrix& m);
     Matrix operator - (const Matrix& m);
     void operator -= (const Matrix& m);
-    bool operator == (const Matrix& m);
     Matrix operator * (const Matrix& m);
     void operator *= (const Matrix& m);
     Matrix operator * (unsigned int k);
     void operator *= (unsigned int k);
+    Matrix operator ^ (unsigned int k);
+    void operator ^= (unsigned int k);
+    bool operator == (const Matrix& m);
+    bool operator != (const Matrix& m);
     int& operator () (unsigned int x, unsigned int y);
     const int& operator()(unsigned int x, unsigned int y) const;
     friend std::ostream & operator << (std::ostream& out, const Matrix& object) {
