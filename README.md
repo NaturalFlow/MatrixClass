@@ -1,30 +1,30 @@
 # Class matrix in c++
-  A matrix class with operators overloaded, for_each, encapsulation and acess using matrix(i,j) notation. At this moment the class is for a int matrix, but i pretende to post a generic version with more funcionalities. Still in construction and requires a apropriate examples and documentation of uses , although I really think is already useful(help me solved a lot problems related to matrices)
-  
+  A matrix class with operators overloaded, for_each, encapsulation and acess using matrix(i,j) notation. At this moment the class is for a int matrix, but i will post a generic version with more funcionalities.
+      
 # What does the class have?
   This matrix was designed to facilitate its use and yet have dynamic tools to increase the possibilities of use. The following features are currently available:
   
  Operators: 
  
-             +  sum of matrix
+     +  sum of matrix
   
-             += (self) sum of matrix
+     += (self) sum of matrix
              
-             -  substraction of matrix
+     -  substraction of matrix
              
-             -= 
+     -= 
              
-             *  either multiply a matrix with another or a matrix with a scalar number 
+     *  either multiply a matrix with another or a matrix with a scalar number 
              
-             *= (self)either multiply a matrix with another or a matrix with a scalar number 
+     *= (self)either multiply a matrix with another or a matrix with a scalar number 
              
-             ^  power of matrix
+     ^  power of matrix
              
-             ^= (self)power of matrix
+     ^= (self)power of matrix
              
-             == check with 2 matrices are equal
+     == check with 2 matrices are equal
              
-             != check with 2 matrices are different
+     != check with 2 matrices are different
                         
   Methods:
     
